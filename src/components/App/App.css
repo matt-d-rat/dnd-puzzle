@@ -1,0 +1,17 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  width: 500px;
+  position: relative;
+}
+
+.App-row {
+  display: flex;
+  flex-direction: row;
+  align-self: stretch;
+  align-items: center;
+  justify-content: flex-end;
+}

@@ -1,0 +1,19 @@
+.Cliff {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  background: #584328;
+  background-image: url('../../images/tile-pillar.png');
+  height: 150px;
+  flex: 1 1 100%;
+  max-width: 350px;
+  align-self: stretch;
+  position: relative;
+  z-index: 0;
+}
+
+.Cliff--center {
+  align-items: center;
+  justify-content: center;
+}

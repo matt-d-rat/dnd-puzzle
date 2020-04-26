@@ -1,0 +1,21 @@
+.Track {
+  background-image: url('../../images/tile-track.png');
+  clip-path: inset(0 0 150px 0);
+  display: block;
+  width: 50px;
+  height: 350px;
+  transition: transform 2s;
+  position: relative;
+  z-index: 1;
+}
+
+.Track::after {
+  background-image: url('../../images/tile-track-pillar.png');
+  display: block;
+  content: '';
+  height: 50px;
+  width: 50px;
+  bottom: 150px;
+  position: absolute;
+  z-index: 2;
+}

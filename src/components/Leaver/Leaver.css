@@ -1,0 +1,38 @@
+.Leaver {
+  /* background: green; */
+  background-color: transparent;
+  background-image: url('../../images/sprite-lever.png');
+  background-repeat: no-repeat;
+  border: none;
+  height: 32px;
+  width: 32px;
+  margin: 6px 9px 12px 9px;
+}
+
+.Leaver:focus {
+  outline: none;
+}
+
+.Leaver--red {
+  background-position: -96px 0;
+}
+
+.Leaver--red.is-pulled {
+  background-position: -96px -64px;
+}
+
+.Leaver--green {
+  background-position: -224px -128px;
+}
+
+.Leaver--green.is-pulled {
+  background-position: -224px -192px;
+}
+
+.Leaver--yellow {
+  background-position: -352px 0;
+}
+
+.Leaver--yellow.is-pulled {
+  background-position: -352px -64px;
+}

@@ -1,0 +1,27 @@
+.Grid {
+  background-color: #080504;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 100%;
+  max-width: 350px;
+  max-height: 350px;
+  position: relative;
+}
+
+.Grid::after {
+  pointer-events: none;
+  display: block;
+  content: '';
+  flex: 1 1 100%;
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
