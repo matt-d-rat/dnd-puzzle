@@ -18,7 +18,7 @@ const Leaver = ({ className, color = 'red', isPulled = false, onClick }) => {
 
 Leaver.propTypes = {
   className: PropTypes.string,
-  color: PropTypes.oneOf(['red', 'green', 'yellow']),
+  color: PropTypes.oneOf(['red', 'green', 'yellow', 'cyan']),
   isPulled: PropTypes.bool,
   onClick: PropTypes.func,
 };
