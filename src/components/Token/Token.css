@@ -10,6 +10,13 @@
   border: var(--grid-line-width) solid #fff;
   box-shadow: 0 0 var(--grid-line-width) 0 #000;
   color: #fff;
+  cursor: grab;
   width: var(--token-size);
   height: var(--token-size);
+  z-index: 999;
+}
+
+.Token.is-dragging {
+  visibility: hidden;
+  cursor: grabbing
 }

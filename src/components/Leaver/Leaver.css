@@ -1,5 +1,4 @@
 .Leaver {
-  /* background: green; */
   background-color: transparent;
   background-image: url('../../images/sprite-lever.png');
   background-repeat: no-repeat;
@@ -35,4 +34,12 @@
 
 .Leaver--yellow.is-pulled {
   background-position: -352px -64px;
+}
+
+.Leaver--cyan {
+  background-position: -352px -128px;
+}
+
+.Leaver--cyan.is-pulled {
+  background-position: -352px -192px;
 }

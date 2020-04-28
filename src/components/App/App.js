@@ -1,19 +1,81 @@
-import React, { useState, useCallback } from 'react';
-import './App.css';
+import React, { useState, useCallback, useReducer } from 'react';
+import { DndProvider } from 'react-dnd';
+import Backend from 'react-dnd-html5-backend';
 
 import Board from '../Board';
 import { Tile, TileGroup } from '../Tile';
 import Leaver from '../Leaver';
 import Track from '../Track';
-
 import Chest from '../Chest';
-import Token from '../Token';
+
+import './App.css';
+
+const initialTokenState = {
+  alannia: {
+    name: 'Allannia Hawklight',
+    color: '#4CAF50',
+    position: { col: 3, row: 24 },
+  },
+  blayd: {
+    name: 'Blayd Piper',
+    color: '#E91E63',
+    position: { col: 3, row: 25 },
+  },
+  duckworth: {
+    name: 'Duckworth Gloomstar',
+    color: '#3F51B5',
+    position: { col: 3, row: 26 },
+  },
+  komf: {
+    name: "Komf Idgaf Grey'c",
+    color: '#FFC107',
+    position: { col: 2, row: 24 },
+  },
+  michael: {
+    name: 'Michael Fullmourn',
+    color: '#00BCD4',
+    position: { col: 2, row: 25 },
+  },
+  nib: {
+    name: 'Nibendobharchú',
+    color: '#8BC34A',
+    position: { col: 2, row: 26 },
+  },
+  rosemary: {
+    name: 'Rosemary Pridethorn',
+    color: '#9C27B0',
+    position: { col: 1, row: 24 },
+  },
+  tor: {
+    name: 'Tor Eldin',
+    color: '#FF5722',
+    position: { col: 1, row: 25 },
+  },
+};
+
+function tokenReducer(state, { type, payload }) {
+  switch (type) {
+    case 'move':
+      return {
+        ...state,
+        [payload.tokenId]: {
+          ...state[payload.tokenId],
+          position: { col: payload.col, row: payload.row },
+        },
+      };
+    default:
+      throw new Error();
+  }
+}
 
 const App = () => {
   // State
+  const [tokens, dispatch] = useReducer(tokenReducer, initialTokenState);
+
   const [leaverA, setLeverA] = useState(false);
   const [leaverB, setLeverB] = useState(false);
   const [leaverC, setLeverC] = useState(false);
+  const [leaverD, setLeverD] = useState(false);
 
   const [rotateTrackX, setRotateTrackX] = useState(180);
   const [rotateTrackY, setRotateTrackY] = useState(90);
@@ -71,343 +133,2005 @@ const App = () => {
     setLeverC(!leaverC);
   }, [leaverC, setLeverC]);
 
+  const onPullLeaverD = useCallback(() => {
+    setLeverD(!leaverD);
+  }, [leaverD, setLeverD]);
+
   const onToggleChest = useCallback(() => {
     setIsChestOpen(!isChestOpen);
   }, [isChestOpen, setIsChestOpen]);
 
-  // Rendering vars
-
   return (
     <div className="App">
-      <Board width={500}>
-        {/* Stone Platform (North) */}
-        <TileGroup>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
+      <DndProvider backend={Backend}>
+        <Board width={500}>
+          {/* Stone Platform (North) */}
+          <TileGroup>
+            <Tile
+              col={0}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={0}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
+            <Tile
+              col={0}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            >
+              <Leaver color="cyan" onClick={onPullLeaverD} isPulled={leaverD} />
+            </Tile>
+            <Tile
+              col={2}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={1}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-        </TileGroup>
+            <Tile
+              col={0}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={2}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+          </TileGroup>
 
-        {/* Track (North) */}
-        <TileGroup>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+          {/* Track (North) */}
+          <TileGroup>
+            <Tile
+              col={0}
+              row={3}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={3}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={3}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={3}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={3}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={3}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={3}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={3}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={3}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={3}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={4}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={4}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={4}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={4}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={4}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={4}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={4}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={4}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={4}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={4}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={5}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={5}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={5}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={5}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={5}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={5}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={5}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={5}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={5}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={5}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="stone">
-            <Track rotate={rotateTrackX} />
-          </Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={6}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={6}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={6}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={6}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={6}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={6}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={6}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            >
+              <Track rotate={rotateTrackX} />
+            </Tile>
+            <Tile
+              col={7}
+              row={6}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={6}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={6}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={7}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={7}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={7}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={7}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={7}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={7}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={7}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={7}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={7}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={7}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={8}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={8}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={8}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={8}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={8}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={8}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={8}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={8}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={8}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={8}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-        </TileGroup>
+            <Tile
+              col={0}
+              row={9}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={9}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={9}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={9}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={9}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={9}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={9}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={9}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={9}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={9}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+          </TileGroup>
 
-        {/* Platform (West) + Track (Center) */}
-        <TileGroup>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+          {/* Platform (West) + Track (Center) */}
+          <TileGroup>
+            <Tile
+              col={0}
+              row={10}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={10}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={10}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={10}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={10}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={10}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={10}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={10}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={10}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={10}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={11}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={11}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={11}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={11}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={11}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={11}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={11}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={11}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={11}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={11}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={12}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={12}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={12}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={12}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={12}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={12}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={12}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={12}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={12}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={12}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="stone"></Tile>
-          <Tile type="stone" isBlocked>
-            <Chest isOpen={isChestOpen} onClick={onToggleChest} />
-          </Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="stone">
-            <Track rotate={rotateTrackY} />
-          </Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={13}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile col={1} row={13} type="stone" isBlocked>
+              <Chest isOpen={isChestOpen} onClick={onToggleChest} />
+            </Tile>
+            <Tile
+              col={2}
+              row={13}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={13}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={13}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={13}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={13}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            >
+              <Track rotate={rotateTrackY} />
+            </Tile>
+            <Tile
+              col={7}
+              row={13}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={13}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={13}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={14}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={14}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={14}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={14}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={14}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={14}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={14}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={14}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={14}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={14}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={15}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={15}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={15}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={15}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={15}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={15}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={15}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={15}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={15}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={15}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-        </TileGroup>
+            <Tile
+              col={0}
+              row={16}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={16}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={16}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={16}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={16}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={16}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={16}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={16}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={16}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={16}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+          </TileGroup>
 
-        {/* Track (South) */}
-        <TileGroup>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+          {/* Track (South) */}
+          <TileGroup>
+            <Tile
+              col={0}
+              row={17}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={17}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={17}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={17}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={17}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={17}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={17}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={17}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={17}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={17}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={18}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={18}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={18}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={18}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={18}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={18}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={18}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={18}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={18}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={18}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={19}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={19}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={19}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={19}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={19}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={19}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={19}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={19}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={19}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={19}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="stone">
-            <Track rotate={rotateTrackZ} />
-          </Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={20}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={20}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={20}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={20}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={20}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={20}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={20}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            >
+              <Track rotate={rotateTrackZ} />
+            </Tile>
+            <Tile
+              col={7}
+              row={20}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={20}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={20}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={21}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={21}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={21}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={21}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={21}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={21}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={21}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={21}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={21}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={21}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
+            <Tile
+              col={0}
+              row={22}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={22}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={22}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={22}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={22}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={22}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={22}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={22}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={22}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={22}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
 
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="none" isBlocked></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-          <Tile type="blank"></Tile>
-        </TileGroup>
+            <Tile
+              col={0}
+              row={23}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={23}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={23}
+              type="none"
+              isBlocked
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={23}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={23}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={23}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={23}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={23}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={23}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={9}
+              row={23}
+              type="blank"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+          </TileGroup>
 
-        {/* Stone Platform (South) */}
-        <TileGroup>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone" isBlocked>
-            <Leaver color="red" onClick={onPullLeaverA} isPulled={leaverA} />
-          </Tile>
+          {/* Stone Platform (South) */}
+          <TileGroup>
+            <Tile
+              col={0}
+              row={24}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={24}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={24}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={24}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={24}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={24}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={24}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={24}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={24}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile col={9} row={24} type="stone" isBlocked>
+              <Leaver color="red" onClick={onPullLeaverA} isPulled={leaverA} />
+            </Tile>
 
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone">
-            <Token color="red">A</Token>
-          </Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone" isBlocked>
-            <Leaver color="green" onClick={onPullLeaverB} isPulled={leaverB} />
-          </Tile>
+            <Tile
+              col={0}
+              row={25}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={25}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={25}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={25}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={25}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={25}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={25}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={25}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={25}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile col={9} row={25} type="stone" isBlocked>
+              <Leaver
+                color="green"
+                onClick={onPullLeaverB}
+                isPulled={leaverB}
+              />
+            </Tile>
 
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone" isBlocked>
-            <Leaver color="yellow" onClick={onPullLeaverC} isPulled={leaverC} />
-          </Tile>
-        </TileGroup>
-      </Board>
+            <Tile
+              col={0}
+              row={26}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={1}
+              row={26}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={2}
+              row={26}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={3}
+              row={26}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={4}
+              row={26}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={5}
+              row={26}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={6}
+              row={26}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={7}
+              row={26}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile
+              col={8}
+              row={26}
+              type="stone"
+              tokens={tokens}
+              onDrop={dispatch}
+            ></Tile>
+            <Tile col={9} row={26} type="stone" isBlocked>
+              <Leaver
+                color="yellow"
+                onClick={onPullLeaverC}
+                isPulled={leaverC}
+              />
+            </Tile>
+          </TileGroup>
+        </Board>
+      </DndProvider>
     </div>
   );
 };

@@ -9,6 +9,16 @@
   box-shadow: 0 0 0 var(--grid-line-width) var(--grid-color);
 }
 
+.Tile.is-over::after {
+  content: '';
+  display: block;
+  position: absolute;
+  background-color: rgba(0,230,118, 0.4);
+  height: var(--grid-size);
+  width: var(--grid-size);
+  z-index: 2;
+}
+
 .Tile.is-blocked {
   box-shadow: none;
 }
