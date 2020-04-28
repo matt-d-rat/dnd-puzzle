@@ -1,17 +1,21 @@
+:root {
+  --gutter-xs: 1px;
+  --gutter-sm: 2px;
+  --gutter-m: 4px;
+  --gutter-lg: 10px;
+  --gutter-xl: 20px;
+}
+
 .App {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: white;
-  width: 500px;
-  position: relative;
-}
-
-.App-row {
-  display: flex;
-  flex-direction: row;
+  flex: 1 1 100%;
+  min-height: 100vh;
+  overflow: auto;
   align-self: stretch;
-  align-items: center;
-  justify-content: flex-end;
+  padding: var(--guter-xl);
+  position: relative;
 }

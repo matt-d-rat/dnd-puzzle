@@ -1,12 +1,16 @@
 import React, { useState, useCallback } from 'react';
 import './App.css';
 
-import Cliff from '../Cliff';
-import Grid from '../Grid';
-import Track from '../Track';
+import Board from '../Board';
+import { Tile, TileGroup } from '../Tile';
 import Leaver from '../Leaver';
+
+// import Cliff from '../Cliff';
+// import Grid from '../Grid';
+// import Track from '../Track';
+
 import Chest from '../Chest';
-import Token from '../Token';
+// import Token from '../Token';
 
 const App = () => {
   // State
@@ -75,56 +79,330 @@ const App = () => {
   }, [isChestOpen, setIsChestOpen]);
 
   // Rendering vars
-  const gridSmall = {
-    height: '150px',
-    width: '150px',
-    flex: 'auto',
-  };
 
   return (
     <div className="App">
-      <div className="App-row">
-        <Grid>
-          <Cliff />
-        </Grid>
-      </div>
+      <Board width={500}>
+        {/* Dtone Platform (North) */}
+        <TileGroup>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
 
-      <div className="App-row">
-        <Grid>
-          <Track rotate={rotateTrackX} />
-        </Grid>
-      </div>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
 
-      <div className="App-row">
-        <Grid style={gridSmall}>
-          <Cliff center>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+        </TileGroup>
+
+        {/* Blank + Track (North) */}
+        <TileGroup>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+        </TileGroup>
+
+        {/* Platform (West) + Track (Center) */}
+        <TileGroup>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="stone"></Tile>
+          <Tile type="stone">
             <Chest isOpen={isChestOpen} onClick={onToggleChest} />
-          </Cliff>
-        </Grid>
-        <Grid>
-          <Track rotate={rotateTrackY} />
-        </Grid>
-      </div>
+          </Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
 
-      <div className="App-row">
-        <Grid>
-          <Track rotate={rotateTrackZ} />
-        </Grid>
-      </div>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
 
-      <div className="App-row">
-        <Grid>
-          <Cliff>
-            <Leaver color="red" isPulled={leaverA} onClick={onPullLeaverA} />
-            <Leaver color="green" isPulled={leaverB} onClick={onPullLeaverB} />
-            <Leaver color="yellow" isPulled={leaverC} onClick={onPullLeaverC} />
-          </Cliff>
-        </Grid>
-      </div>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
 
-      <Token color="red" title="Alannia">
-        A
-      </Token>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+        </TileGroup>
+
+        {/* Blank + Track (South) */}
+        <TileGroup>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="none" isBlocked></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+          <Tile type="blank"></Tile>
+        </TileGroup>
+
+        {/* Stone Platform (South) */}
+        <TileGroup>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone">
+            <Leaver color="red" onClick={onPullLeaverA} isPulled={leaverA} />
+          </Tile>
+
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone">
+            <Leaver color="green" onClick={onPullLeaverB} isPulled={leaverB} />
+          </Tile>
+
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone">
+            <Leaver color="yellow" onClick={onPullLeaverC} isPulled={leaverC} />
+          </Tile>
+        </TileGroup>
+      </Board>
     </div>
   );
 };

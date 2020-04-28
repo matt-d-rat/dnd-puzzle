@@ -1,0 +1,30 @@
+.Tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: var(--grid-size);
+  width: var(--grid-size);
+  position: relative;
+  box-shadow: 0 0 0 var(--grid-line-width) var(--grid-color);
+}
+
+.Tile.is-blocked {
+  box-shadow: none;
+}
+
+.Tile--none {
+  background: none;
+}
+
+.Tile--blank {
+  background-color: #080504;
+}
+
+.Tile--stone {
+  background-image: url('../../images/tile-pillar.png');
+}
+
+.Tile--test {
+  background-color: cyan;
+}

@@ -1,0 +1,10 @@
+:root {
+  --grid-size: 50px;
+  --grid-line-width: 1px;
+  --grid-color: rgb(56, 56, 56);
+}
+
+.Board {
+  display: grid;
+  grid-gap: var(--grid-line-width);
+}
