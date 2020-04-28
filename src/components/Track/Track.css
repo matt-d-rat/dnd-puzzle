@@ -2,10 +2,10 @@
   background-image: url('../../images/tile-track.png');
   clip-path: inset(0 0 150px 0);
   display: block;
-  width: 50px;
-  height: 350px;
+  width: var(--grid-size);
+  height: calc(var(--grid-size) * 7);
   transition: transform 2s;
-  position: relative;
+  position: absolute;
   z-index: 1;
 }
 
@@ -17,5 +17,4 @@
   width: 50px;
   bottom: 150px;
   position: absolute;
-  z-index: 2;
 }

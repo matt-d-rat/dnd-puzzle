@@ -4,13 +4,10 @@ import './App.css';
 import Board from '../Board';
 import { Tile, TileGroup } from '../Tile';
 import Leaver from '../Leaver';
-
-// import Cliff from '../Cliff';
-// import Grid from '../Grid';
-// import Track from '../Track';
+import Track from '../Track';
 
 import Chest from '../Chest';
-// import Token from '../Token';
+import Token from '../Token';
 
 const App = () => {
   // State
@@ -83,7 +80,7 @@ const App = () => {
   return (
     <div className="App">
       <Board width={500}>
-        {/* Dtone Platform (North) */}
+        {/* Stone Platform (North) */}
         <TileGroup>
           <Tile type="stone"></Tile>
           <Tile type="stone"></Tile>
@@ -119,7 +116,7 @@ const App = () => {
           <Tile type="stone"></Tile>
         </TileGroup>
 
-        {/* Blank + Track (North) */}
+        {/* Track (North) */}
         <TileGroup>
           <Tile type="none" isBlocked></Tile>
           <Tile type="none" isBlocked></Tile>
@@ -160,7 +157,9 @@ const App = () => {
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
-          <Tile type="stone"></Tile>
+          <Tile type="stone">
+            <Track rotate={rotateTrackX} />
+          </Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
@@ -235,14 +234,16 @@ const App = () => {
           <Tile type="blank"></Tile>
 
           <Tile type="stone"></Tile>
-          <Tile type="stone">
+          <Tile type="stone" isBlocked>
             <Chest isOpen={isChestOpen} onClick={onToggleChest} />
           </Tile>
           <Tile type="stone"></Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
-          <Tile type="stone"></Tile>
+          <Tile type="stone">
+            <Track rotate={rotateTrackY} />
+          </Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
@@ -281,7 +282,7 @@ const App = () => {
           <Tile type="blank"></Tile>
         </TileGroup>
 
-        {/* Blank + Track (South) */}
+        {/* Track (South) */}
         <TileGroup>
           <Tile type="none" isBlocked></Tile>
           <Tile type="none" isBlocked></Tile>
@@ -322,7 +323,9 @@ const App = () => {
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
-          <Tile type="stone"></Tile>
+          <Tile type="stone">
+            <Track rotate={rotateTrackZ} />
+          </Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
           <Tile type="blank"></Tile>
@@ -372,7 +375,7 @@ const App = () => {
           <Tile type="stone"></Tile>
           <Tile type="stone"></Tile>
           <Tile type="stone"></Tile>
-          <Tile type="stone">
+          <Tile type="stone" isBlocked>
             <Leaver color="red" onClick={onPullLeaverA} isPulled={leaverA} />
           </Tile>
 
@@ -382,10 +385,12 @@ const App = () => {
           <Tile type="stone"></Tile>
           <Tile type="stone"></Tile>
           <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
-          <Tile type="stone"></Tile>
           <Tile type="stone">
+            <Token color="red">A</Token>
+          </Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone"></Tile>
+          <Tile type="stone" isBlocked>
             <Leaver color="green" onClick={onPullLeaverB} isPulled={leaverB} />
           </Tile>
 
@@ -398,7 +403,7 @@ const App = () => {
           <Tile type="stone"></Tile>
           <Tile type="stone"></Tile>
           <Tile type="stone"></Tile>
-          <Tile type="stone">
+          <Tile type="stone" isBlocked>
             <Leaver color="yellow" onClick={onPullLeaverC} isPulled={leaverC} />
           </Tile>
         </TileGroup>

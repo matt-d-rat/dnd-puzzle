@@ -1,19 +1,15 @@
+:root {
+  --token-size: calc(var(--grid-size) - 10px);
+}
+
 .Token {
   display: flex;
-  border-radius: 40px;
-  min-width: 40px;
-  min-height: 40px;
-  max-width: 40px;
-  max-height: 40px;
-  margin: 5px;
-  flex: auto;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  border-radius: var(--token-size);
+  border: var(--grid-line-width) solid #fff;
+  box-shadow: 0 0 var(--grid-line-width) 0 #000;
   color: #fff;
-  border: 1px solid #fff;
-  box-shadow: 0 0 1px 0 #000;
-  position: absolute;
-  bottom: 0;
-  right: 150px;
+  width: var(--token-size);
+  height: var(--token-size);
 }
