@@ -35,6 +35,10 @@
   background-image: url('../../images/tile-pillar.png');
 }
 
+.Tile--lava {
+  background-image: url('../../images/tile-lava-3.gif');
+}
+
 .Tile--test {
   background-color: cyan;
 }

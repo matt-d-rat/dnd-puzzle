@@ -7,4 +7,5 @@
 .Board {
   display: grid;
   grid-gap: var(--grid-line-width);
+  transform: rotate(90deg);
 }

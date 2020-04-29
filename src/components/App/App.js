@@ -78,6 +78,7 @@ const App = () => {
   const [leaverB, setLeverB] = useState(false);
   const [leaverC, setLeverC] = useState(false);
   const [leaverD, setLeverD] = useState(true);
+  const [leaverDAttached, setAttachLeverD] = useState(false);
 
   const [rotateTrackX, setRotateTrackX] = useState(180);
   const [rotateTrackY, setRotateTrackY] = useState(90);
@@ -86,7 +87,7 @@ const App = () => {
   const [isChestOpen, setIsChestOpen] = useState(false);
 
   // Handers
-  const onPullLeaverA = useCallback(() => {
+  const onInteractLeaverA = useCallback(() => {
     const leaverState = !leaverA;
     const rotation = leaverState ? 180 : -180;
 
@@ -108,7 +109,7 @@ const App = () => {
     setRotateTrackZ,
   ]);
 
-  const onPullLeaverB = useCallback(() => {
+  const onInteractLeaverB = useCallback(() => {
     const leaverState = !leaverB;
     const rotation = leaverState ? 90 : -90;
 
@@ -131,13 +132,24 @@ const App = () => {
     setRotateTrackZ,
   ]);
 
-  const onPullLeaverC = useCallback(() => {
+  const onInteractLeaverC = useCallback(() => {
     setLeverC(!leaverC);
   }, [leaverC, setLeverC]);
 
-  const onPullLeaverD = useCallback(() => {
-    setLeverD(!leaverD);
-  }, [leaverD, setLeverD]);
+  const onInteractLeaverD = useCallback(
+    (e) => {
+      e.preventDefault();
+      // Click + Shift = false
+      if (!e.nativeEvent.shiftKey && leaverDAttached) {
+        setLeverD(!leaverD);
+      }
+      // Click + Shift = true
+      else if (e.nativeEvent.shiftKey) {
+        setAttachLeverD(!leaverDAttached);
+      }
+    },
+    [leaverD, setLeverD, leaverDAttached, setAttachLeverD]
+  );
 
   const onToggleChest = useCallback(() => {
     setIsChestOpen(!isChestOpen);
@@ -234,7 +246,12 @@ const App = () => {
               tokens={tokens}
               onDrop={dispatch}
             >
-              <Leaver color="cyan" onClick={onPullLeaverD} isPulled={leaverD} />
+              <Leaver
+                color="cyan"
+                hasLeaver={leaverDAttached}
+                onClick={onInteractLeaverD}
+                isPulled={leaverD}
+              />
             </Tile>
             <Tile
               col={2}
@@ -408,49 +425,49 @@ const App = () => {
             <Tile
               col={3}
               row={3}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={3}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={3}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={3}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={3}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={3}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={3}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -482,49 +499,49 @@ const App = () => {
             <Tile
               col={3}
               row={4}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={4}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={4}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={4}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={4}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={4}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={4}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -556,49 +573,49 @@ const App = () => {
             <Tile
               col={3}
               row={5}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={5}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={5}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={5}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={5}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={5}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={5}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -630,21 +647,21 @@ const App = () => {
             <Tile
               col={3}
               row={6}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={6}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={6}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -660,21 +677,21 @@ const App = () => {
             <Tile
               col={7}
               row={6}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={6}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={6}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -706,49 +723,49 @@ const App = () => {
             <Tile
               col={3}
               row={7}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={7}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={7}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={7}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={7}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={7}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={7}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -780,49 +797,49 @@ const App = () => {
             <Tile
               col={3}
               row={8}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={8}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={8}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={8}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={8}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={8}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={8}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -854,49 +871,49 @@ const App = () => {
             <Tile
               col={3}
               row={9}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={9}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={9}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={9}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={9}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={9}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={9}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -931,49 +948,49 @@ const App = () => {
             <Tile
               col={3}
               row={10}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={10}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={10}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={10}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={10}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={10}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={10}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1005,49 +1022,49 @@ const App = () => {
             <Tile
               col={3}
               row={11}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={11}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={11}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={11}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={11}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={11}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={11}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1076,49 +1093,49 @@ const App = () => {
             <Tile
               col={3}
               row={12}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={12}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={12}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={12}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={12}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={12}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={12}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1143,21 +1160,21 @@ const App = () => {
             <Tile
               col={3}
               row={13}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={13}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={13}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1173,21 +1190,21 @@ const App = () => {
             <Tile
               col={7}
               row={13}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={13}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={13}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1216,49 +1233,49 @@ const App = () => {
             <Tile
               col={3}
               row={14}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={14}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={14}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={14}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={14}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={14}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={14}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1290,49 +1307,49 @@ const App = () => {
             <Tile
               col={3}
               row={15}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={15}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={15}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={15}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={15}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={15}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={15}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1364,49 +1381,49 @@ const App = () => {
             <Tile
               col={3}
               row={16}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={16}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={16}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={16}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={16}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={16}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={16}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1441,49 +1458,49 @@ const App = () => {
             <Tile
               col={3}
               row={17}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={17}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={17}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={17}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={17}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={17}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={17}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1515,49 +1532,49 @@ const App = () => {
             <Tile
               col={3}
               row={18}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={18}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={18}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={18}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={18}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={18}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={18}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1589,49 +1606,49 @@ const App = () => {
             <Tile
               col={3}
               row={19}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={19}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={19}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={19}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={19}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={19}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={19}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1663,21 +1680,21 @@ const App = () => {
             <Tile
               col={3}
               row={20}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={20}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={20}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1693,21 +1710,21 @@ const App = () => {
             <Tile
               col={7}
               row={20}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={20}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={20}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1739,49 +1756,49 @@ const App = () => {
             <Tile
               col={3}
               row={21}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={21}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={21}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={21}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={21}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={21}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={21}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1813,49 +1830,49 @@ const App = () => {
             <Tile
               col={3}
               row={22}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={4}
               row={22}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={5}
               row={22}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={6}
               row={22}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={7}
               row={22}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={8}
               row={22}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
             <Tile
               col={9}
               row={22}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             ></Tile>
@@ -1887,7 +1904,7 @@ const App = () => {
             <Tile
               col={3}
               row={23}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             >
@@ -1896,7 +1913,7 @@ const App = () => {
             <Tile
               col={4}
               row={23}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             >
@@ -1905,7 +1922,7 @@ const App = () => {
             <Tile
               col={5}
               row={23}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             >
@@ -1914,7 +1931,7 @@ const App = () => {
             <Tile
               col={6}
               row={23}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             >
@@ -1923,7 +1940,7 @@ const App = () => {
             <Tile
               col={7}
               row={23}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             >
@@ -1932,7 +1949,7 @@ const App = () => {
             <Tile
               col={8}
               row={23}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             >
@@ -1941,7 +1958,7 @@ const App = () => {
             <Tile
               col={9}
               row={23}
-              type="blank"
+              type="lava"
               tokens={tokens}
               onDrop={dispatch}
             >
@@ -2015,7 +2032,12 @@ const App = () => {
               onDrop={dispatch}
             ></Tile>
             <Tile col={9} row={24} type="stone" isBlocked>
-              <Leaver color="red" onClick={onPullLeaverA} isPulled={leaverA} />
+              <Leaver
+                color="red"
+                onClick={onInteractLeaverA}
+                hasLeaver
+                isPulled={leaverA}
+              />
             </Tile>
 
             <Tile
@@ -2084,7 +2106,8 @@ const App = () => {
             <Tile col={9} row={25} type="stone" isBlocked>
               <Leaver
                 color="green"
-                onClick={onPullLeaverB}
+                onClick={onInteractLeaverB}
+                hasLeaver
                 isPulled={leaverB}
               />
             </Tile>
@@ -2155,7 +2178,8 @@ const App = () => {
             <Tile col={9} row={26} type="stone" isBlocked>
               <Leaver
                 color="yellow"
-                onClick={onPullLeaverC}
+                onClick={onInteractLeaverC}
+                hasLeaver
                 isPulled={leaverC}
               />
             </Tile>

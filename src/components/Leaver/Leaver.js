@@ -3,11 +3,18 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './Leaver.css';
 
-const Leaver = ({ className, color = 'red', isPulled = false, onClick }) => {
+const Leaver = ({
+  className,
+  color = 'red',
+  hasLeaver = true,
+  isPulled = false,
+  onClick,
+}) => {
   const _className = classnames(
     'Leaver',
     {
       [`Leaver--${color}`]: Boolean(color),
+      'has-leaver': hasLeaver,
       'is-pulled': isPulled,
     },
     className
@@ -19,6 +26,7 @@ const Leaver = ({ className, color = 'red', isPulled = false, onClick }) => {
 Leaver.propTypes = {
   className: PropTypes.string,
   color: PropTypes.oneOf(['red', 'green', 'yellow', 'cyan']),
+  hasLeaver: PropTypes.bool,
   isPulled: PropTypes.bool,
   onClick: PropTypes.func,
 };
