@@ -78,7 +78,7 @@ Tile.propTypes = {
   onDrop: PropTypes.func,
   row: PropTypes.number.isRequired,
   tokens: PropTypes.object,
-  type: PropTypes.oneOf(['none', 'blank', 'stone', 'lava', 'test']),
+  type: PropTypes.oneOf(['none', 'blank', 'stone', 'lava', 'magma', 'test']),
 };
 
 export default Tile;

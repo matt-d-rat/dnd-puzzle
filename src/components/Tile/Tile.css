@@ -36,7 +36,11 @@
 }
 
 .Tile--lava {
-  background-image: url('../../images/tile-lava-3.gif');
+  background-image: url('../../images/tile-lava.gif');
+}
+
+.Tile--magma {
+  background-image: url('../../images/tile-magma.png');
 }
 
 .Tile--test {
