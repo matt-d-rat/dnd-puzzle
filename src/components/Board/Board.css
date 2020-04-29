@@ -11,4 +11,5 @@
 
 .Board.is-landscape {
   transform: rotate(90deg);
+  position: absolute; /* Fixes over-scroll when orientated landscape */
 }
