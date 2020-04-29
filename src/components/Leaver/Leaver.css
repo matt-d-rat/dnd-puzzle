@@ -6,11 +6,22 @@
   height: 32px;
   width: 32px;
   margin: 6px 9px 12px 9px;
+}
+
+.Leaver.is-landscape {
   transform: rotate(270deg);
 }
 
 .Leaver:focus {
   outline: none;
+}
+
+.Leaver:hover {
+  cursor: not-allowed;
+}
+
+.Leaver.has-leaver:hover {
+  cursor: pointer;
 }
 
 .Leaver--red {

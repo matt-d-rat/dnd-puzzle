@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useDrag } from 'react-dnd';
 
+import AppContext from '../App/AppContext';
 import ItemTypes from '../../constants/itemTypes';
 
 import './Token.css';
@@ -15,6 +16,9 @@ const Token = ({
   style,
   ...other
 }) => {
+  // Context
+  const { isLandscape } = useContext(AppContext);
+
   // State
   const [{ isDragging }, dragRef] = useDrag({
     item: {
@@ -29,7 +33,10 @@ const Token = ({
 
   const _className = classnames(
     'Token',
-    { 'is-dragging': isDragging },
+    {
+      'is-landscape': isLandscape,
+      'is-dragging': isDragging,
+    },
     className
   );
 

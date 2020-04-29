@@ -7,5 +7,8 @@
 .Board {
   display: grid;
   grid-gap: var(--grid-line-width);
+}
+
+.Board.is-landscape {
   transform: rotate(90deg);
 }

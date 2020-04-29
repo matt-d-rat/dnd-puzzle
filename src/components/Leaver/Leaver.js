@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+
+import AppContext from '../App/AppContext';
+
 import './Leaver.css';
 
 const Leaver = ({
@@ -10,11 +13,15 @@ const Leaver = ({
   isPulled = false,
   onClick,
 }) => {
+  // Context
+  const { isLandscape } = useContext(AppContext);
+
   const _className = classnames(
     'Leaver',
     {
       [`Leaver--${color}`]: Boolean(color),
       'has-leaver': hasLeaver,
+      'is-landscape': isLandscape,
       'is-pulled': isPulled,
     },
     className

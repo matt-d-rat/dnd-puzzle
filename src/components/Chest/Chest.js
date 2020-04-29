@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import AppContext from '../App/AppContext';
+
 import './Chest.css';
 
 const Chest = ({ isOpen = false, onClick, ...other }) => {
-  const _className = classnames('Chest', { 'is-open': isOpen });
+  // Context
+  const { isLandscape } = useContext(AppContext);
+
+  const _className = classnames('Chest', {
+    'is-open': isOpen,
+    'is-landscape': isLandscape,
+  });
 
   return <button className={_className} onClick={onClick} {...other} />;
 };

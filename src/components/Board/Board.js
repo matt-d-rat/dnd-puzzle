@@ -8,6 +8,7 @@ import './Board.css';
 
 import { boardDimension } from './propTypes';
 import GridContext from './GridContext';
+import AppContext from '../App/AppContext';
 
 const Board = ({
   children,
@@ -18,6 +19,7 @@ const Board = ({
   ...other
 }) => {
   // Context
+  const { isLandscape } = useContext(AppContext);
   const { size } = useContext(GridContext);
 
   const _width = !isNil(width) ? units.parse(width, 'width') : null;
@@ -26,7 +28,11 @@ const Board = ({
   const totalRows = !isNil(_height) ? _height.value / size.value : 1;
 
   // Rendering
-  const _className = classnames('Board', className);
+  const _className = classnames(
+    'Board',
+    { 'is-landscape': isLandscape },
+    className
+  );
 
   const _style = {
     ...(height && {

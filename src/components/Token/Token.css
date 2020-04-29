@@ -15,6 +15,9 @@
   height: var(--token-size);
   position: absolute;
   z-index: 999;
+}
+
+.Token.is-landscape {
   transform: rotate(270deg);
 }
 

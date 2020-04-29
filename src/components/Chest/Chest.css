@@ -6,11 +6,18 @@
   border: none;
   width: 32px;
   height: 32px;
-  transform: rotate(270deg);
 }
 
 .Chest:focus {
   outline: none;
+}
+
+.Chest:hover {
+  cursor: pointer;
+}
+
+.Chest.is-landscape {
+  transform: rotate(270deg);
 }
 
 .Chest.is-open {
