@@ -351,63 +351,49 @@ const App = () => {
                 type="stone"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={4}
                 row={2}
                 type="stone"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={5}
                 row={2}
                 type="stone"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={6}
                 row={2}
                 type="stone"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={7}
                 row={2}
                 type="stone"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={8}
                 row={2}
                 type="stone"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={9}
                 row={2}
                 type="stone"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
             </TileGroup>
 
             {/* Track (North) */}
@@ -1200,6 +1186,7 @@ const App = () => {
                 onDrop={dispatch}
               >
                 <Track rotate={rotateTrackY} />
+                <AntiMagicField isActive={leaverD} />
               </Tile>
               <Tile
                 col={7}
@@ -1921,63 +1908,49 @@ const App = () => {
                 type="lava"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={4}
                 row={23}
                 type="magma"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={5}
                 row={23}
                 type="magma"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={6}
                 row={23}
                 type="magma"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={7}
                 row={23}
                 type="magma"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={8}
                 row={23}
                 type="lava"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
               <Tile
                 col={9}
                 row={23}
                 type="lava"
                 tokens={tokens}
                 onDrop={dispatch}
-              >
-                <AntiMagicField isActive={leaverD} />
-              </Tile>
+              ></Tile>
             </TileGroup>
 
             {/* Stone Platform (South) */}

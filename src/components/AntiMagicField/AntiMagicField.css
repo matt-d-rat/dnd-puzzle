@@ -1,42 +1,52 @@
 
+.AntiMagicField {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .AntiMagicField,
 .AntiMagicField::before,
 .AntiMagicField::after {
   pointer-events: none;
-  margin-top: calc(var(--grid-size) * 0.3);
   height: 0;
-  width: var(--grid-size);
-  transition: height 0.4s ease-out;
+  min-height: 0;
+  width: calc((var(--grid-size) * 7) + (var(--grid-line-width) * 2));
+  transition: height 0.4s ease-out,
+              min-height 0.4s ease-out;
   z-index: 3;
 }
 
 .AntiMagicField::before,
 .AntiMagicField::after {
   display: block;
+  content: '';
   position: absolute;
 }
 
 .AntiMagicField {
-  animation: glitch1 2.5s infinite;
-  background-color: rgba(255,255,255, 0.4);
+  animation: glitch1 9s infinite;
+  background-color: rgba(255,255,255, 0.1);
   position: relative;
 }
 
 .AntiMagicField::before {
-  background-color: #67f3da;
-  animation: glitch2 2.5s infinite;
+  background-color: rgba(148, 246, 250, 0.1);
+  animation: glitch2 6.5s infinite;
 }
 
 .AntiMagicField::after {
-  background-color: #f16f6f;
-  animation: glitch3 2.5s infinite;
+  background-color: rgba(250, 180, 148, 0.1);
+  animation: glitch3 6.5s infinite;
 }
 
 .AntiMagicField.is-active,
 .AntiMagicField.is-active::before,
 .AntiMagicField.is-active::after {
-  height: calc(var(--grid-size) * 0.7);
-  transition: height 0.4s ease-in;
+  height: calc((var(--grid-size) * 21) + (var(--grid-line-width) * 21));
+  min-height: calc((var(--grid-size) * 21) + (var(--grid-line-width) * 21));
+  transition: height 0.4s ease-in,
+              min-height 0.4s ease-in;
 }
 
 @keyframes glitch1 {
