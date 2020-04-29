@@ -1,9 +1,9 @@
 .Track {
   background-image: url('../../images/tile-track.png');
-  clip-path: inset(0 0 150px 0);
+  clip-path: inset(0 0 calc((var(--grid-size) * 3)) 0);
   display: block;
   width: var(--grid-size);
-  height: calc(var(--grid-size) * 7);
+  height: calc((var(--grid-size) * 7) + (var(--grid-line-width) * 6));
   transition: transform 2s;
   position: absolute;
   z-index: 1;
@@ -16,7 +16,7 @@
   content: '';
   height: 50px;
   width: 50px;
-  bottom: 150px;
+  bottom: calc((var(--grid-size) * 3));
   position: absolute;
   pointer-events: none;
 }
