@@ -344,6 +344,7 @@ const App = () => {
                 type="stone"
                 tokens={tokens}
                 onDrop={dispatch}
+                isBlocked
               >
                 <Leaver
                   color="cyan"

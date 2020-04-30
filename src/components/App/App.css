@@ -22,7 +22,7 @@
 
 .App-controls {
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   position: fixed;
   top: var(--gutter-xl);
   right: var(--gutter-xl);
@@ -31,10 +31,12 @@
 .App-icon {
   color: rgba(255,255,255,0.4);
   fill: currentColor;
+  width: 28px;
+  height: 28px;
 }
 
 .App-icon + .App-icon {
-  margin-top: var(--gutter-xl);
+  margin-right: var(--gutter-xl);
 }
 
 .App-icon:hover,
