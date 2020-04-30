@@ -59,7 +59,12 @@ const Tile = ({
     <div ref={dropRef} className={_className} {...other}>
       {children}
       {hasToken && (
-        <Token id={tokenId} color={token.color} title={token.name}>
+        <Token
+          id={tokenId}
+          color={token.color}
+          title={token.name}
+          isRevealed={token.isRevealed}
+        >
           {token.name
             .split(' ')
             .map((n, i, a) => (i === 0 || i + 1 === a.length ? n[0] : null))

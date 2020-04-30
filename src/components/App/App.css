@@ -20,9 +20,21 @@
   position: relative;
 }
 
+.App-controls {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: var(--gutter-xl);
+  right: var(--gutter-xl);
+}
+
 .App-icon {
   color: rgba(255,255,255,0.4);
   fill: currentColor;
+}
+
+.App-icon + .App-icon {
+  margin-top: var(--gutter-xl);
 }
 
 .App-icon:hover,
@@ -33,10 +45,4 @@
 
 .App-icon:active {
   color: rgba(255,255,255,1);
-}
-
-.App-icon--orientation {
-  position: fixed;
-  top: var(--gutter-xl);
-  right: var(--gutter-xl);
 }

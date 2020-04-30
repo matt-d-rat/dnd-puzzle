@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useDrag } from 'react-dnd';
@@ -13,6 +13,8 @@ const Token = ({
   className,
   color = '#ff0000',
   id,
+  isHidden = false,
+  isRevealed = true,
   style,
   ...other
 }) => {
@@ -20,6 +22,8 @@ const Token = ({
   const { isLandscape } = useContext(AppContext);
 
   // State
+  const [isTokenHidden, setIsTokenHidden] = useState(isHidden);
+
   const [{ isDragging }, dragRef] = useDrag({
     item: {
       type: ItemTypes.TOKEN,
@@ -31,11 +35,23 @@ const Token = ({
     }),
   });
 
+  // Handlers
+  const onToggleHiding = useCallback(
+    (e) => {
+      if (e.nativeEvent.shiftKey) {
+        setIsTokenHidden(!isTokenHidden);
+      }
+    },
+    [isTokenHidden, setIsTokenHidden]
+  );
+
   const _className = classnames(
     'Token',
     {
       'is-landscape': isLandscape,
       'is-dragging': isDragging,
+      'is-hidden': isTokenHidden,
+      'is-revealed': isRevealed,
     },
     className
   );
@@ -48,6 +64,7 @@ const Token = ({
       key={`token-${id}`}
       className={_className}
       style={_style}
+      onClick={onToggleHiding}
       {...other}
     >
       {children}
@@ -60,6 +77,8 @@ Token.propTypes = {
   className: PropTypes.string,
   color: PropTypes.string,
   id: PropTypes.string.isRequired,
+  isHidden: PropTypes.bool,
+  isRevealed: PropTypes.bool,
   style: PropTypes.object,
 };
 

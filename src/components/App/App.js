@@ -12,50 +12,103 @@ import Track from '../Track';
 import Chest from '../Chest';
 
 import { ReactComponent as IconOrientation } from '../../images/icon-orientation.svg';
+import { ReactComponent as IconEye } from '../../images/icon-eye.svg';
 
 import './App.css';
 
-const initialTokenState = {
+const playerTokens = {
   alannia: {
     name: 'Allannia Hawklight',
     color: '#4CAF50',
     position: { col: 3, row: 24 },
+    isRevealed: true,
+    type: 'player',
   },
   blayd: {
     name: 'Blayd Piper',
     color: '#E91E63',
     position: { col: 3, row: 25 },
+    isRevealed: true,
+    type: 'player',
   },
   duckworth: {
     name: 'Duckworth Gloomstar',
     color: '#3F51B5',
     position: { col: 3, row: 26 },
+    isRevealed: true,
+    type: 'player',
   },
   komf: {
     name: "Komf Idgaf Grey'c",
     color: '#FFC107',
     position: { col: 2, row: 24 },
+    isRevealed: true,
+    type: 'player',
   },
   michael: {
     name: 'Michael Fullmourn',
     color: '#00BCD4',
     position: { col: 2, row: 25 },
+    isRevealed: true,
+    type: 'player',
   },
   nib: {
     name: 'Nibendobharchú',
     color: '#8BC34A',
     position: { col: 2, row: 26 },
+    isRevealed: true,
+    type: 'player',
   },
   rosemary: {
     name: 'Rosemary Pridethorn',
     color: '#9C27B0',
     position: { col: 1, row: 24 },
+    isRevealed: true,
+    type: 'player',
   },
   tor: {
     name: 'Tor Eldin',
     color: '#FF5722',
     position: { col: 1, row: 25 },
+    isRevealed: true,
+    type: 'player',
   },
+};
+
+const monsterTokens = {
+  'magma-mephit-a': {
+    name: 'Magma Mephit A',
+    color: '#000',
+    position: { col: 4, row: 12 },
+    isRevealed: false,
+    type: 'monster',
+  },
+  'magma-mephit-b': {
+    name: 'Magma Mephit B',
+    color: '#000',
+    position: { col: 8, row: 17 },
+    isRevealed: false,
+    type: 'monster',
+  },
+  'magma-mephit-c': {
+    name: 'Magma Mephit C',
+    color: '#000',
+    position: { col: 4, row: 21 },
+    isRevealed: false,
+    type: 'monster',
+  },
+  'magma-mephit-d': {
+    name: 'Magma Mephit D',
+    color: '#000',
+    position: { col: 6, row: 4 },
+    isRevealed: false,
+    type: 'monster',
+  },
+};
+
+const initialTokenState = {
+  ...playerTokens,
+  ...monsterTokens,
 };
 
 function tokenReducer(state, { type, payload }) {
@@ -68,6 +121,23 @@ function tokenReducer(state, { type, payload }) {
           position: { col: payload.col, row: payload.row },
         },
       };
+
+    case 'reveal':
+      return {
+        ...state,
+        ...Object.keys(state)
+          .filter((tokenId) => state[tokenId].type === payload.type)
+          .reduce((acc, tokenId) => {
+            return {
+              ...acc,
+              [tokenId]: {
+                ...state[tokenId],
+                isRevealed: payload.isRevealed,
+              },
+            };
+          }, {}),
+      };
+
     default:
       throw new Error();
   }
@@ -75,7 +145,8 @@ function tokenReducer(state, { type, payload }) {
 
 const App = () => {
   // State
-  const [isLandscape, setIsLandscape] = useState(false);
+  const [isLandscape, setIsLandscape] = useState(true);
+  const [areMonstersRevealed, setAreMonstersRevealed] = useState(false);
 
   const [leaverA, setLeverA] = useState(false);
   const [leaverB, setLeverB] = useState(false);
@@ -163,13 +234,27 @@ const App = () => {
     setIsLandscape(!isLandscape);
   }, [isLandscape, setIsLandscape]);
 
+  const onToggleRevealMonsters = useCallback(
+    ({ tokenType, isRevealed }) => {
+      const revealedState = !areMonstersRevealed;
+
+      setAreMonstersRevealed(revealedState);
+
+      dispatch({
+        type: 'reveal',
+        payload: { type: 'monster', isRevealed: revealedState },
+      });
+    },
+    [areMonstersRevealed, setAreMonstersRevealed, dispatch]
+  );
+
   return (
     <div className="App">
       <AppContext.Provider value={{ isLandscape }}>
-        <IconOrientation
-          className="App-icon App-icon--orientation"
-          onClick={onToggleOrientation}
-        />
+        <div className="App-controls">
+          <IconOrientation className="App-icon" onClick={onToggleOrientation} />
+          <IconEye className="App-icon" onClick={onToggleRevealMonsters} />
+        </div>
 
         <DndProvider backend={Backend}>
           <Board width={500}>

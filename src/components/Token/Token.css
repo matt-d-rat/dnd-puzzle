@@ -14,11 +14,21 @@
   width: var(--token-size);
   height: var(--token-size);
   position: absolute;
+  opacity: 1;
+  visibility: hidden;
   z-index: 999;
 }
 
 .Token.is-landscape {
   transform: rotate(270deg);
+}
+
+.Token.is-revealed {
+  visibility: visible;
+}
+
+.Token.is-hidden {
+  opacity: 0.4;
 }
 
 .Token.is-dragging {
