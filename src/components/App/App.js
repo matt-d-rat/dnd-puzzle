@@ -1,114 +1,81 @@
-import React, { useState, useCallback, useReducer } from 'react';
+import React, { useState, useCallback, useReducer, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
+import intersectionWith from 'lodash.intersectionwith';
+import isEqual from 'lodash.isequal';
 
 import AppContext from './AppContext';
 import Board from '../Board';
 import { Tile, TileGroup } from '../Tile';
 
-import AntiMagicField from '../AntiMagicField';
 import Leaver from '../Leaver';
 import Track from '../Track';
 import Chest from '../Chest';
 
 import { ReactComponent as IconOrientation } from '../../images/icon-orientation.svg';
-import { ReactComponent as IconEye } from '../../images/icon-eye.svg';
 
 import './App.css';
 
 const playerTokens = {
-  alannia: {
-    name: 'Allannia Hawklight',
+  player1: {
+    name: '1',
     color: '#4CAF50',
-    position: { col: 3, row: 24 },
-    isRevealed: true,
-    type: 'player',
-  },
-  blayd: {
-    name: 'Blayd Piper',
-    color: '#E91E63',
-    position: { col: 3, row: 25 },
-    isRevealed: true,
-    type: 'player',
-  },
-  duckworth: {
-    name: 'Duckworth Gloomstar',
-    color: '#3F51B5',
-    position: { col: 3, row: 26 },
-    isRevealed: true,
-    type: 'player',
-  },
-  komf: {
-    name: "Komf Idgaf Grey'c",
-    color: '#FFC107',
-    position: { col: 2, row: 24 },
-    isRevealed: true,
-    type: 'player',
-  },
-  michael: {
-    name: 'Michael Fullmourn',
-    color: '#00BCD4',
-    position: { col: 2, row: 25 },
-    isRevealed: true,
-    type: 'player',
-  },
-  nib: {
-    name: 'Nibendobharchú',
-    color: '#8BC34A',
-    position: { col: 2, row: 26 },
-    isRevealed: true,
-    type: 'player',
-  },
-  rosemary: {
-    name: 'Rosemary Pridethorn',
-    color: '#9C27B0',
-    position: { col: 1, row: 24 },
-    isRevealed: true,
-    type: 'player',
-  },
-  tor: {
-    name: 'Tor Eldin',
-    color: '#FF5722',
     position: { col: 1, row: 25 },
     isRevealed: true,
     type: 'player',
   },
+  player2: {
+    name: '2',
+    color: '#E91E63',
+    position: { col: 0, row: 25 },
+    isRevealed: true,
+    type: 'player',
+  },
 };
 
-const monsterTokens = {
-  'magma-mephit-a': {
-    name: 'Magma Mephit A',
-    color: '#000',
-    position: { col: 4, row: 12 },
-    isRevealed: false,
-    type: 'monster',
+const validInteractPositions = {
+  leaverA: {
+    positions: [{ col: 8, row: 24 }],
   },
-  'magma-mephit-b': {
-    name: 'Magma Mephit B',
-    color: '#000',
-    position: { col: 8, row: 17 },
-    isRevealed: false,
-    type: 'monster',
+  leaverB: {
+    positions: [{ col: 8, row: 25 }],
   },
-  'magma-mephit-c': {
-    name: 'Magma Mephit C',
-    color: '#000',
-    position: { col: 4, row: 21 },
-    isRevealed: false,
-    type: 'monster',
+  leaverC: {
+    positions: [{ col: 8, row: 26 }],
   },
-  'magma-mephit-d': {
-    name: 'Magma Mephit D',
-    color: '#000',
-    position: { col: 6, row: 4 },
-    isRevealed: false,
-    type: 'monster',
+  leaverD: {
+    positions: [
+      { col: 0, row: 0 },
+      { col: 1, row: 0 },
+      { col: 2, row: 0 },
+      { col: 0, row: 1 },
+      { col: 2, row: 1 },
+      { col: 0, row: 2 },
+      { col: 1, row: 2 },
+      { col: 2, row: 2 },
+    ],
+  },
+  chest: {
+    positions: [
+      { col: 0, row: 12 },
+      { col: 1, row: 12 },
+      { col: 2, row: 12 },
+      { col: 0, row: 13 },
+      { col: 2, row: 13 },
+      { col: 0, row: 14 },
+      { col: 1, row: 14 },
+      { col: 2, row: 14 },
+    ],
   },
 };
+
+const winTiles = [
+  { col: 7, row: 1 },
+  { col: 8, row: 1 },
+];
 
 const initialTokenState = {
   ...playerTokens,
-  ...monsterTokens,
 };
 
 function tokenReducer(state, { type, payload }) {
@@ -146,13 +113,13 @@ function tokenReducer(state, { type, payload }) {
 const App = () => {
   // State
   const [isLandscape, setIsLandscape] = useState(true);
-  const [areMonstersRevealed, setAreMonstersRevealed] = useState(false);
 
   const [leaverA, setLeverA] = useState(false);
   const [leaverB, setLeverB] = useState(false);
   const [leaverC, setLeverC] = useState(false);
-  const [leaverD, setLeverD] = useState(true);
+  const [leaverD, setLeverD] = useState(false);
   const [leaverDAttached, setAttachLeverD] = useState(false);
+  const [isMissingTrackVisible, setIsMissingTrackVisible] = useState(false);
 
   const [rotateTrackX, setRotateTrackX] = useState(180);
   const [rotateTrackY, setRotateTrackY] = useState(90);
@@ -211,49 +178,109 @@ const App = () => {
     setLeverC(!leaverC);
   }, [leaverC, setLeverC]);
 
-  const onInteractLeaverD = useCallback(
-    (e) => {
-      e.preventDefault();
-      // Click + Shift = false
-      if (!e.nativeEvent.shiftKey && leaverDAttached) {
-        setLeverD(!leaverD);
-      }
-      // Click + Shift = true
-      else if (e.nativeEvent.shiftKey) {
-        setAttachLeverD(!leaverDAttached);
-      }
-    },
-    [leaverD, setLeverD, leaverDAttached, setAttachLeverD]
-  );
+  const onInteractLeaverD = useCallback(() => {
+    const leaverState = !leaverD;
 
-  const onToggleChest = useCallback(() => {
-    setIsChestOpen(!isChestOpen);
+    if (leaverState) {
+      const rotation = 0;
+
+      setRotateTrackX(rotation);
+      setRotateTrackY(rotation);
+      setRotateTrackZ(rotation);
+
+      setLeverA(false);
+      setLeverB(false);
+      setLeverC(false);
+
+      setIsMissingTrackVisible(true);
+    } else {
+      setRotateTrackX(180);
+      setRotateTrackY(90);
+      setRotateTrackZ(0);
+
+      setLeverA(false);
+      setLeverB(false);
+      setLeverC(false);
+
+      setIsMissingTrackVisible(false);
+    }
+
+    setLeverD(leaverState);
+  }, [
+    leaverD,
+    setLeverD,
+    setRotateTrackX,
+    setRotateTrackY,
+    setRotateTrackZ,
+    setIsMissingTrackVisible,
+  ]);
+
+  const openChest = useCallback(() => {
+    if (!isChestOpen) {
+      setIsChestOpen(true);
+      alert('You found a cyan lever!');
+    }
   }, [isChestOpen, setIsChestOpen]);
 
   const onToggleOrientation = useCallback(() => {
     setIsLandscape(!isLandscape);
   }, [isLandscape, setIsLandscape]);
 
-  const onToggleRevealMonsters = useCallback(
-    ({ tokenType, isRevealed }) => {
-      const revealedState = !areMonstersRevealed;
+  const canInteractWith = useCallback(
+    (itemName) => {
+      const { positions } = validInteractPositions[itemName];
 
-      setAreMonstersRevealed(revealedState);
+      if (!positions) {
+        return false;
+      }
 
-      dispatch({
-        type: 'reveal',
-        payload: { type: 'monster', isRevealed: revealedState },
-      });
+      const playerPositions = Object.keys(tokens).reduce(
+        (acc, playerName) => [...acc, tokens[playerName].position],
+        []
+      );
+
+      return intersectionWith(positions, playerPositions, isEqual).length > 0;
     },
-    [areMonstersRevealed, setAreMonstersRevealed, dispatch]
+    [tokens]
   );
+
+  const checkWinCondition = useCallback(() => {
+    const playerPositions = Object.keys(tokens).reduce(
+      (acc, playerName) => [...acc, tokens[playerName].position],
+      []
+    );
+
+    return (
+      intersectionWith(playerPositions, winTiles, isEqual).length ===
+      playerPositions.length
+    );
+  }, [tokens]);
+
+  // Effects
+  useEffect(() => {
+    if (isChestOpen && !leaverDAttached) {
+      const isPlayerNearLeaverD = canInteractWith('leaverD');
+
+      if (isPlayerNearLeaverD) {
+        setAttachLeverD(true);
+        alert('You attached the missing lever.');
+      }
+    }
+  }, [isChestOpen, leaverDAttached, canInteractWith, setAttachLeverD]);
+
+  // Game state (runs on every re-render)
+  useEffect(() => {
+    if (checkWinCondition()) {
+      alert('You won!');
+      return;
+    }
+  });
 
   return (
     <div className="App">
       <AppContext.Provider value={{ isLandscape }}>
         <div className="App-controls">
           <IconOrientation className="App-icon" onClick={onToggleOrientation} />
-          <IconEye className="App-icon" onClick={onToggleRevealMonsters} />
         </div>
 
         <DndProvider backend={Backend}>
@@ -351,6 +378,7 @@ const App = () => {
                   hasLeaver={leaverDAttached}
                   onClick={onInteractLeaverD}
                   isPulled={leaverD}
+                  disabled={!canInteractWith('leaverD') || !leaverDAttached}
                 />
               </Tile>
               <Tile
@@ -391,14 +419,14 @@ const App = () => {
               <Tile
                 col={7}
                 row={1}
-                type="stone"
+                type="checkerboard"
                 tokens={tokens}
                 onDrop={dispatch}
               ></Tile>
               <Tile
                 col={8}
                 row={1}
-                type="stone"
+                type="checkerboard"
                 tokens={tokens}
                 onDrop={dispatch}
               ></Tile>
@@ -833,7 +861,14 @@ const App = () => {
                 type="magma"
                 tokens={tokens}
                 onDrop={dispatch}
-              ></Tile>
+              >
+                <Tile
+                  type="track"
+                  isHidden={!isMissingTrackVisible}
+                  col={6}
+                  row={7}
+                />
+              </Tile>
               <Tile
                 col={7}
                 row={7}
@@ -904,10 +939,17 @@ const App = () => {
               <Tile
                 col={6}
                 row={8}
-                type="magma"
+                type={'magma'}
                 tokens={tokens}
                 onDrop={dispatch}
-              ></Tile>
+              >
+                <Tile
+                  type="track"
+                  isHidden={!isMissingTrackVisible}
+                  col={6}
+                  row={8}
+                />
+              </Tile>
               <Tile
                 col={7}
                 row={8}
@@ -981,7 +1023,14 @@ const App = () => {
                 type="lava"
                 tokens={tokens}
                 onDrop={dispatch}
-              ></Tile>
+              >
+                <Tile
+                  type="track"
+                  isHidden={!isMissingTrackVisible}
+                  col={6}
+                  row={9}
+                />
+              </Tile>
               <Tile
                 col={7}
                 row={9}
@@ -1234,7 +1283,11 @@ const App = () => {
                 onDrop={dispatch}
               ></Tile>
               <Tile col={1} row={13} type="stone" isBlocked>
-                <Chest isOpen={isChestOpen} onClick={onToggleChest} />
+                <Chest
+                  isOpen={isChestOpen}
+                  onClick={openChest}
+                  disabled={!canInteractWith('chest')}
+                />
               </Tile>
               <Tile
                 col={2}
@@ -1272,7 +1325,6 @@ const App = () => {
                 onDrop={dispatch}
               >
                 <Track rotate={rotateTrackY} />
-                <AntiMagicField isActive={leaverD} />
               </Tile>
               <Tile
                 col={7}
@@ -1344,7 +1396,14 @@ const App = () => {
                 type="lava"
                 tokens={tokens}
                 onDrop={dispatch}
-              ></Tile>
+              >
+                <Tile
+                  type="track"
+                  isHidden={!isMissingTrackVisible}
+                  col={6}
+                  row={14}
+                />
+              </Tile>
               <Tile
                 col={7}
                 row={14}
@@ -1418,7 +1477,14 @@ const App = () => {
                 type="lava"
                 tokens={tokens}
                 onDrop={dispatch}
-              ></Tile>
+              >
+                <Tile
+                  type="track"
+                  isHidden={!isMissingTrackVisible}
+                  col={6}
+                  row={15}
+                />
+              </Tile>
               <Tile
                 col={7}
                 row={15}
@@ -1492,7 +1558,14 @@ const App = () => {
                 type="lava"
                 tokens={tokens}
                 onDrop={dispatch}
-              ></Tile>
+              >
+                <Tile
+                  type="track"
+                  isHidden={!isMissingTrackVisible}
+                  col={6}
+                  row={14}
+                />
+              </Tile>
               <Tile
                 col={7}
                 row={16}
@@ -1867,7 +1940,14 @@ const App = () => {
                 type="lava"
                 tokens={tokens}
                 onDrop={dispatch}
-              ></Tile>
+              >
+                <Tile
+                  type="track"
+                  isHidden={!isMissingTrackVisible}
+                  col={6}
+                  row={21}
+                />
+              </Tile>
               <Tile
                 col={7}
                 row={21}
@@ -1941,7 +2021,14 @@ const App = () => {
                 type="magma"
                 tokens={tokens}
                 onDrop={dispatch}
-              ></Tile>
+              >
+                <Tile
+                  type="track"
+                  isHidden={!isMissingTrackVisible}
+                  col={6}
+                  row={22}
+                />
+              </Tile>
               <Tile
                 col={7}
                 row={22}
@@ -2015,7 +2102,14 @@ const App = () => {
                 type="magma"
                 tokens={tokens}
                 onDrop={dispatch}
-              ></Tile>
+              >
+                <Tile
+                  type="track"
+                  isHidden={!isMissingTrackVisible}
+                  col={6}
+                  row={23}
+                />
+              </Tile>
               <Tile
                 col={7}
                 row={23}
@@ -2110,6 +2204,9 @@ const App = () => {
                   onClick={onInteractLeaverA}
                   hasLeaver
                   isPulled={leaverA}
+                  disabled={
+                    !canInteractWith('leaverA') || isMissingTrackVisible
+                  }
                 />
               </Tile>
 
@@ -2182,6 +2279,9 @@ const App = () => {
                   onClick={onInteractLeaverB}
                   hasLeaver
                   isPulled={leaverB}
+                  disabled={
+                    !canInteractWith('leaverB') || isMissingTrackVisible
+                  }
                 />
               </Tile>
 
@@ -2254,6 +2354,9 @@ const App = () => {
                   onClick={onInteractLeaverC}
                   hasLeaver
                   isPulled={leaverC}
+                  disabled={
+                    !canInteractWith('leaverC') || isMissingTrackVisible
+                  }
                 />
               </Tile>
             </TileGroup>

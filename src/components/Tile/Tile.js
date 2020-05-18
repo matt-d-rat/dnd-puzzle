@@ -15,6 +15,7 @@ const Tile = ({
   col,
   className,
   isBlocked = false,
+  isHidden = false,
   onDrop = () => {},
   row,
   tokens = {},
@@ -51,6 +52,7 @@ const Tile = ({
       [`Tile--${type}`]: type,
       'is-over': isOver && canDrop,
       'is-blocked': isBlocked,
+      'is-hidden': isHidden,
     },
     className
   );
@@ -80,10 +82,20 @@ Tile.propTypes = {
   col: PropTypes.number.isRequired,
   className: PropTypes.string,
   isBlocked: PropTypes.bool,
+  isHidden: PropTypes.bool,
   onDrop: PropTypes.func,
   row: PropTypes.number.isRequired,
   tokens: PropTypes.object,
-  type: PropTypes.oneOf(['none', 'blank', 'stone', 'lava', 'magma', 'test']),
+  type: PropTypes.oneOf([
+    'none',
+    'blank',
+    'stone',
+    'lava',
+    'magma',
+    'track',
+    'checkerboard',
+    'test',
+  ]),
 };
 
 export default Tile;

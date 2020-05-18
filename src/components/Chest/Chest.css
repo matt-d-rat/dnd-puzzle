@@ -12,8 +12,12 @@
   outline: none;
 }
 
-.Chest:hover {
+.Chest:not(.is-open):hover {
   cursor: pointer;
+}
+
+.Chest:disabled:hover {
+  cursor: not-allowed;
 }
 
 .Chest.is-landscape {

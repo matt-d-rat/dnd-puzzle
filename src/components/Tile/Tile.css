@@ -7,6 +7,9 @@
   width: var(--grid-size);
   position: relative;
   box-shadow: 0 0 0 var(--grid-line-width) var(--grid-color);
+  transition: opacity 1s ease-in;
+  transition-delay: 2s;
+  opacity: 1;
 }
 
 .Tile.is-over::after {
@@ -21,6 +24,11 @@
 
 .Tile.is-blocked {
   box-shadow: none;
+}
+
+.Tile.is-hidden {
+  opacity: 0;
+  transition: opacity 1s ease-out;
 }
 
 .Tile--none {
@@ -41,6 +49,21 @@
 
 .Tile--magma {
   background-image: url('../../images/tile-magma.png');
+}
+
+.Tile--track {
+  background-image: url('../../images/tile-track.png');
+}
+
+.Tile--checkerboard {
+  background-color: #fff;
+  background-image: linear-gradient(45deg, #000 25%, transparent 25%),
+                    linear-gradient(-45deg, #000 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, #000 75%),
+                    linear-gradient(-45deg, transparent 75%, #000 75%);
+
+  background-size: 10px 10px;
+  background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
 }
 
 .Tile--test {

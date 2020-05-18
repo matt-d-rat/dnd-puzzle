@@ -9,6 +9,7 @@ import './Leaver.css';
 const Leaver = ({
   className,
   color = 'red',
+  disabled = false,
   hasLeaver = true,
   isPulled = false,
   onClick,
@@ -27,12 +28,15 @@ const Leaver = ({
     className
   );
 
-  return <button className={_className} onClick={onClick} />;
+  return (
+    <button className={_className} onClick={onClick} disabled={disabled} />
+  );
 };
 
 Leaver.propTypes = {
   className: PropTypes.string,
   color: PropTypes.oneOf(['red', 'green', 'yellow', 'cyan']),
+  disabled: PropTypes.bool,
   hasLeaver: PropTypes.bool,
   isPulled: PropTypes.bool,
   onClick: PropTypes.func,

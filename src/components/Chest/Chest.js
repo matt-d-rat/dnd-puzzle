@@ -5,7 +5,7 @@ import AppContext from '../App/AppContext';
 
 import './Chest.css';
 
-const Chest = ({ isOpen = false, onClick, ...other }) => {
+const Chest = ({ disabled = false, isOpen = false, onClick, ...other }) => {
   // Context
   const { isLandscape } = useContext(AppContext);
 
@@ -14,10 +14,18 @@ const Chest = ({ isOpen = false, onClick, ...other }) => {
     'is-landscape': isLandscape,
   });
 
-  return <button className={_className} onClick={onClick} {...other} />;
+  return (
+    <button
+      className={_className}
+      disabled={disabled}
+      onClick={onClick}
+      {...other}
+    />
+  );
 };
 
 Chest.propTypes = {
+  disabled: PropTypes.bool,
   isOpen: PropTypes.bool,
   onClick: PropTypes.func,
 };

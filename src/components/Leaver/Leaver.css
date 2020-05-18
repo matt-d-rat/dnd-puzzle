@@ -17,11 +17,12 @@
 }
 
 .Leaver:hover {
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
-.Leaver.has-leaver:hover {
-  cursor: pointer;
+.Leaver:disabled:hover,
+.Leaver:not(.has-leaver):hover {
+  cursor: not-allowed;
 }
 
 .Leaver--red {
