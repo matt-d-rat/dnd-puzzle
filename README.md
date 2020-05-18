@@ -1,6 +1,6 @@
 # React D&D Puzzle Game
 
-A puzzle for a remote Dungeons & Dragons game, written in React.
+A puzzle for a remote Dungeons & Dragons game, written in React. **[Demo](https://matt-d-rat.github.io/dnd-puzzle)**.
 
 ![Screenshot](./screenshot.png)
 
